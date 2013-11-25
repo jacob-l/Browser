@@ -45,9 +45,7 @@ namespace Browser
 
             webView.MainFrame.LoadHtmlString (@"
                 <html>
-                    <head>
-                        
-                    </head>
+                    <head></head>
                     <body id=body>
                         <h1>Интерфейс</h1>
                         <button id=btn>Вызвать C#</button>
@@ -86,13 +84,9 @@ namespace Browser
 
         public void CallJs(string function, string message)
         {
-            var js = string.Format(@"
-                    {0}('{1}');
-                ", function, message);
-
             this.InvokeOnMainThread(() =>
             {
-                webView.WindowScriptObject.EvaluateWebScript(js);
+                webView.WindowScriptObject.CallWebScriptMethod(function, new NSObject[] { new NSString(message) });
             });
         }
     }
