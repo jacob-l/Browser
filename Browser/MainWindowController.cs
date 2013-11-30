@@ -79,14 +79,14 @@ namespace Browser
         [Export("callFromJs")]
         public void CallFromJs(NSString message)
         {
-            CallJs("showMessage", message + " Ответ из C#");
+            CallJs("showMessage", new NSObject[] { new NSString(message + " Ответ из C#") });
         }
 
-        public void CallJs(string function, string message)
+        public void CallJs(string function, NSObject[] arguments)
         {
             this.InvokeOnMainThread(() =>
             {
-                webView.WindowScriptObject.CallWebScriptMethod(function, new NSObject[] { new NSString(message) });
+                webView.WindowScriptObject.CallWebScriptMethod(function, arguments);
             });
         }
     }
